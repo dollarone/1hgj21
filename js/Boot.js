@@ -6,7 +6,7 @@ PlatformerGame.Boot = function(){};
 PlatformerGame.Boot.prototype = {
   preload: function() {
     //assets we'll use in the loading screen
-    this.load.image('preloadbar', 'assets/images/loadingbar.png');
+    this.load.image('preloadbar', 'assets/preloadingbar.png');
   },
   create: function() {
     //loading screen will have a black background

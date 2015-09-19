@@ -1,4 +1,3 @@
-# 1hgj21
-21st One Hour Game Jam
+# phaser-platformer-boilerplate
 
-Dynamaddict. Play at http://myperfectgame.com/games/1hgj21/
+Making a platformer? Start with this!

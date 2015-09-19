@@ -16,9 +16,11 @@ PlatformerGame.Preload.prototype = {
     this.game.load.image('sky', 'assets/sky.png');
     this.game.load.image('ground', 'assets/tile_dirt.png');
     this.game.load.image('ground2', 'assets/tile_dirt_dug.png');
-    this.game.load.image('star', 'assets/star.png');
+    this.game.load.image('star', 'assets/gold_star.png');
+    this.game.load.image('rock', 'assets/rock2.png');
     this.game.load.image('dynamite', 'assets/dynomite.png');
     this.game.load.image('explosion', 'assets/explosion.png');
+    this.game.load.image('explosion2', 'assets/explosion2.png');
     this.game.load.image('exit', 'assets/tile_exit.png');
     this.game.load.spritesheet('dude', 'assets/player.png', 32, 32);
   },
