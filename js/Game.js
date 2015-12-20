@@ -43,13 +43,10 @@ PlatformerGame.Game.prototype = {
     this.rocks = this.game.add.group();
     this.rocks.enableBody = true;
 
-
-
-
     this.createGround();
     this.createLevel1();
 
-    this.platforms.add(this.rocks);
+//    this.platforms.add(this.rocks);
 
     // The player and its settings
     this.player = this.game.add.sprite(this.playerSpawnX, this.playerSpawnY, 'dude');
@@ -238,7 +235,9 @@ PlatformerGame.Game.prototype = {
     this.createLedge(8+32*10, 4+128+32*8, false);
     this.createLedge(8+32*11, 4+128+32*8, false);
 
-    this.exit1 = this.exit.create(8+32*10, 4+128+32*7, 'exit');
+    this.exit1 = this.exit.create(8+32*10+16, 4+128+32*7+16, 'exit');
+    this.exit1.body.gravity.y = 300;
+    this.exit1.anchor.setTo(0.5, 1);
 
 
 
@@ -407,6 +406,45 @@ PlatformerGame.Game.prototype = {
 
   },
 
+  createLevel3 : function() {
+    this.exit1 = this.exit.create(648, 100, 'exit');
+    this.exit1.body.gravity.y = 300;
+    this.exit1.anchor.setTo(0.5, 1);
+
+    this.createStar(400 + 32*2, 460 - 128);
+
+    this.createLedge(24+32*9, 4+32*11, true);
+
+
+    for(var i=0; i<26; i++) {
+        for(var j=0; j<16; j++) {
+            if (j!= 9 && i != 3 && i != 22 && i != 2 && i != 23 && j != 3 && j != 4 && j != 10 && !(j==11 && i==10)) {
+              this.createLedge(32*i-8, 32*j-28, true);
+          }
+        }
+    }
+    this.createLedge(32*21-8, 32*4-28, false);
+    this.createLedge(32*21-8, 32*3-28, false);
+    this.createLedge(32*1, 32*16, false);
+//    this.createLedge(32*24, 32*16, false);
+
+    this.ledge = this.platforms.create(32*23, 32*16+7, 'ground2');        
+    this.ledge.body.immovable = true;
+    this.ledge['explodable'] = false;
+    this.ledge.scale.setTo(0.5, 0.5);
+            //dynamite.scale.setTo(0.5,0.5);
+
+    this.createRock(32*5-8, 32*17-28);
+
+
+
+
+    this.playerSpawnX = 8+32*10;
+    this.playerSpawnY = 4+128+32*7;
+
+    this.goToNextLevel = false; 
+  },
+
   update: function() {
 
     if (this.respawnTimer > 0) {
@@ -432,15 +470,25 @@ PlatformerGame.Game.prototype = {
             //this.exit.remove(exit1);
         }, this);
 
-        this.level += 1;
+        this.level++;
+        this.scoreText.text = 'Level ' + this.level + ' Score: ' + this.score;
+
         if (this.level == 2) {
             this.createLevel2();
             this.createGround();
         }
+        else if (this.level == 3) {
+            this.createLevel3();
+            this.createGround();
+        }
+        else if (this.level == 4) {
+            this.scoreText.text = 'All levels cleared! ' + ' Score: ' + this.score + "\n\n\n\n\n" +
+            "                            That's it - thanks for playing!";
+            this.game.paused = true;
+        }
 
         this.scoreAtLevelStart = this.score;
         this.goToNextLevel = false;
-        this.scoreText.text = 'Level ' + this.level + ' Score: ' + this.score;
 
     } 
 
@@ -456,9 +504,10 @@ PlatformerGame.Game.prototype = {
     }
 
 
+//    this.game.physics.arcade.collide(this.player, this.platforms, this.pushRock, this.downCollision, this);
 
-    //  Collide the player and the stars with the platforms
     this.game.physics.arcade.collide(this.player, this.platforms, this.pushRock, null, this);
+
     this.game.physics.arcade.collide(this.exit, this.platforms);
 //    this.game.physics.arcade.collide(this.rocks, this.platforms);
     this.game.physics.arcade.overlap(this.player, this.exit, this.win, null, this);
@@ -489,6 +538,7 @@ PlatformerGame.Game.prototype = {
 
     //  Reset the players velocity (movement)
     this.player.body.velocity.x = 0;
+
 
     if (this.cursors.left.isDown)
     {
@@ -634,6 +684,22 @@ PlatformerGame.Game.prototype = {
         rock.body.velocity.x = player.body.velocity.x / 2;    
         player.body.velocity.x = player.body.velocity.x / 2.1;    
     }
+  },
+
+  downCollision : function(player, platform) {
+ //   if (platform["pushable"]) {
+
+
+
+/// FIXME : why can I hang in walls??
+
+       return player.x < platform.x - 16;
+
+   // }
+    //else {
+  //      return platform.body.touching.up;
+   // }
+
   },
   touchRock : function(player, rock) {
     return !rock["pushable"];

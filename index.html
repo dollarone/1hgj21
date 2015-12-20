@@ -11,19 +11,42 @@
 		<script type="text/javascript" src="js/Game.js"></script>
 
 		<style>
-		  body {
-		    padding: 0px;
-		    margin: 0px;
-		  }
-		  </style>
+*{
+    box-sizing: border-box;
+    margin:0;padding:0;
+}
+  html, body, #container{
+    height: 100%;
+}
+
+#container{
+    display: table;
+    height: 100%;
+}
+
+#upper, #lower{
+    display: table-row;
+}
+
+#upper{
+    height: 100px;
+}
+</style>
+
 	</head>
 
 	<body>  
 		<!-- include the main game file -->
-		<script src="js/main.js"></script>
-        <center>
-	<p>You are addicted to dropping dynamite! Get to the exit without blowing yourself up!</p>
-	<p>Art by TimBeaudet, code by dollarone</p>
- 	</center>
+		<div id="container">
+			<div id="upper" style="position:relative;height:20px;bottom:-20px;">
+	    	    <center>
+					<p>You are addicted to dropping dynamite! Get to the exit without blowing yourself up!</p>
+				<p>Art by TimBeaudet, code by dollarone.</p>
+	 			</center>
+	 		</div>
+	        <div id="lower" style="height:100%;padding-top:20px;">
+				<script src="js/main.js"></script>
+			</div>
+		</div>
 	</body>
 </html>
